@@ -1,5 +1,15 @@
+# Configure the AWS Provider
+provider "aws" {
+  region = "us-east-1"
+}
+
+data "aws_ami" "ubuntu" {
+    most_recent = true
+    owners = ["099720109477"]
+}
+
 resource "aws_instance" "example" {
-  ami                    = "ami-0c55b159cbfafe1f0"
+  ami                    = data.aws_ami.ubuntu.id
   instance_type          = "t2.micro"
 
   user_data = <<-EOF
